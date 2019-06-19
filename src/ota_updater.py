@@ -29,7 +29,7 @@ class OTAUpdater:
 
     def check_for_update_to_install_during_next_reboot(self):
         current_version = self.get_version(self.modulepath(self.main_dir))
-        latest_version = self.get_latest_version()<strong></strong>
+        latest_version = self.get_latest_version()
         print('Checking version... ')
         print('\tCurrent version: ', current_version)
         print('\tLatest version: ', latest_version)
