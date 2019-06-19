@@ -1,15 +1,16 @@
-from ota_updater import OTAUpdater
-from secrets import _ssid, _pass
-#from .main.thingspeak import main as ts
-#from .main.moisture import readSoilMoisture
-#from .main.humidtemp import main as ht\
+from src.ota_updater import OTAUpdater
+from include.secrets import _ssid, _pass
+from .src.thingspeak import main as ts
+from .src.moisture import readSoilMoisture
+from .src.humidtemp import main as ht
 
 # led = Pin(2, Pin.OUT)
 
 
 def download_and_install_update_if_available():
     print("checking for updates...")
-    ota = OTAUpdater('https://github.com/desmith/sudhama.git')
+    ota = OTAUpdater('https://github.com/desmith/sudhama')
+    # ota.check_for_update_to_install_during_next_reboot()
     ota.download_and_install_update_if_available(_ssid, _pass)
 
 

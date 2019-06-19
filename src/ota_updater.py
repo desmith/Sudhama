@@ -9,7 +9,7 @@ import machine
 
 class OTAUpdater:
 
-    def __init__(self, github_repo, module='', main_dir='main'):
+    def __init__(self, github_repo, module='', main_dir='src'):
         self.http_client = HttpClient()
         self.github_repo = github_repo.rstrip('/').replace('https://github.com', 'https://api.github.com/repos')
         self.main_dir = main_dir
@@ -42,6 +42,7 @@ class OTAUpdater:
                 versionfile.close()
 
     def download_and_install_update_if_available(self, ssid, password):
+        self.check_for_update_to_install_during_next_reboot()
         if 'next' in os.listdir(self.module):
             if '.version_on_reboot' in os.listdir(self.modulepath('next')):
                 latest_version = self.get_version(self.modulepath('next'), '.version_on_reboot')
@@ -197,7 +198,12 @@ class HttpClient:
             host, port = host.split(':', 1)
             port = int(port)
 
-        ai = usocket.getaddrinfo(host, port, 0, usocket.SOCK_STREAM)
+        #ai = usocket.getaddrinfo(host, port, 0, usocket.SOCK_STREAM)
+        ai = usocket.getaddrinfo(host, port)[0][-1]
+        print("url: ",url," host: ",host," port: ",port)
+        print("usocket.getaddrinfo(host, port, 0, usocket.SOCK_STREAM)")
+        print("ai: ", ai)
+
         ai = ai[0]
 
         s = usocket.socket(ai[0], ai[1], ai[2])
