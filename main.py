@@ -1,8 +1,8 @@
 from src.ota_updater import OTAUpdater
 from include.secrets import _ssid, _pass
-from .src.thingspeak import main as ts
-from .src.moisture import readSoilMoisture
-from .src.humidtemp import main as ht
+from src.thingspeak import main as ts
+from src.moisture import readSoilMoisture
+from src.humidtemp import main as ht
 
 # led = Pin(2, Pin.OUT)
 
@@ -15,15 +15,10 @@ def download_and_install_update_if_available():
 
 
 def start():
-    '''
-    import main.thingspeak
-    import main.moisture
-    import main.humidtemp
-    wetness = moisture.readSoilMoisture()
+    wetness = readSoilMoisture()
     print("wetness: ", wetness)
-    humidtemp.main()
-    thingspeak.main()
-    '''
+    ht()
+    ts()
     print("Hare Krishna")
 
 

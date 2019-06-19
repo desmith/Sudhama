@@ -198,21 +198,16 @@ class HttpClient:
             host, port = host.split(':', 1)
             port = int(port)
 
+        #print("url: ",url," host: ",host," port: ",port)
         #ai = usocket.getaddrinfo(host, port, 0, usocket.SOCK_STREAM)
-        ai = usocket.getaddrinfo(host, port)[0][-1]
-        print("url: ",url," host: ",host," port: ",port)
-        print("usocket.getaddrinfo(host, port, 0, usocket.SOCK_STREAM)")
-        print("ai: ", ai)
 
-        ai = ai[0]
-
-        s = usocket.socket(ai[0], ai[1], ai[2])
+        s = usocket.socket()
         try:
-            s.connect(ai[-1])
+            s.connect(usocket.getaddrinfo(host, port, 0, usocket.SOCK_STREAM)[0][-1])
             if proto == 'https:':
                 s = ussl.wrap_socket(s, server_hostname=host)
             s.write(b'%s /%s HTTP/1.0\r\n' % (method, path))
-            if not 'Host' in headers:
+            if 'Host' not in headers:
                 s.write(b'Host: %s\r\n' % host)
             # Iterate over keys to avoid tuple alloc
             for k in headers:
