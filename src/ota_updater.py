@@ -202,8 +202,9 @@ class HttpClient:
         #ai = usocket.getaddrinfo(host, port, 0, usocket.SOCK_STREAM)
 
         s = usocket.socket()
+        ai = usocket.getaddrinfo(host, port, 0, usocket.SOCK_STREAM)[0][-1]
         try:
-            s.connect(usocket.getaddrinfo(host, port, 0, usocket.SOCK_STREAM)[0][-1])
+            s.connect(ai)
             if proto == 'https:':
                 s = ussl.wrap_socket(s, server_hostname=host)
             s.write(b'%s /%s HTTP/1.0\r\n' % (method, path))
