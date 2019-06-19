@@ -28,9 +28,8 @@ class OTAUpdater:
         print('network config:', sta_if.ifconfig())
 
     def check_for_update_to_install_during_next_reboot(self):
-        current_version = get_version(self.modulepath(self.main_dir))
-        latest_version = get_latest_version()
-
+        current_version = self.get_version(self.modulepath(self.main_dir))
+        latest_version = self.get_latest_version()<strong></strong>
         print('Checking version... ')
         print('\tCurrent version: ', current_version)
         print('\tLatest version: ', latest_version)
@@ -76,7 +75,7 @@ class OTAUpdater:
             print('No pending update found')
 
     def download_updates_if_available(self):
-        current_version = self.get_version()
+        current_version = self.get_version(self.modulepath(self.main_dir))
         latest_version = self.get_latest_version()
 
         print('Checking version... ')
@@ -103,17 +102,12 @@ class OTAUpdater:
                 os.remove(directory + '/' + entry[0])
         os.rmdir(directory)
 
-    def get_version(self, version_file_name='.version'):
-        directory = self.modulepath(self.main_dir)
-        print('directory: ', directory)
-        print('listdir(): ', os.listdir())
-        print('listdir(self.modulepath(self.main_dir)): ', os.listdir(self.modulepath(self.main_dir)))
-        os.listdir(self.modulepath(self.main_dir))
-        if version_file_name in os.listdir(self.modulepath(self.main_dir)):
+    def get_version(self, directory, version_file_name='.version'):
+        if version_file_name in os.listdir(directory):
             f = open(directory + '/' + version_file_name)
             version = f.read()
             f.close()
-            print('version_file_name: ', version)
+            print('get_version(',directory,')->version_file_name: ', version)
             return version
         return '0.0'
 
