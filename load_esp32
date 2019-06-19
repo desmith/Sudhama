@@ -1,5 +1,0 @@
-ampy --port /dev/cu.SLAB_USBtoUART put boot.py
-ampy --port /dev/cu.SLAB_USBtoUART put main.py
-ampy --port /dev/cu.SLAB_USBtoUART put .version
-ampy --port /dev/cu.SLAB_USBtoUART put src
-
