@@ -8,8 +8,9 @@ from secrets import _ssid, _pass
 
 
 def download_and_install_update_if_available():
-     o = OTAUpdater('https://github.com/desmith/sudhama')
-     o.download_and_install_update_if_available(_ssid, _pass)
+    print("checking for updates...")
+    ota = OTAUpdater('https://github.com/desmith/sudhama.git')
+    ota.download_and_install_update_if_available(_ssid, _pass)
 
 
 def start():
