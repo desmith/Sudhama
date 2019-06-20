@@ -22,7 +22,7 @@ def start():
     print('Hare Krishna')
 
     # put the device to sleep for 10 seconds
-    print('going to sleep now...')
+    #print('going to sleep now...')
     #machine.deepsleep(20000)
 
 
