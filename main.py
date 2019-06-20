@@ -23,7 +23,7 @@ def start():
 
     # put the device to sleep for 10 seconds
     print('going to sleep now...')
-    machine.deepsleep(10000)
+    #machine.deepsleep(20000)
 
 
 def boot():
