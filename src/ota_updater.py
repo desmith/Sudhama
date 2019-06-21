@@ -1,10 +1,11 @@
 # 1000 x dank aan Evelien die mijn in deze tijden gesteund heeft
 # ohja, en er is ook nog tante suker (Jana Dej.) die graag kinderen wilt maar het zelf nog niet beseft
 
-import usocket
 import os
+import errno
 import gc
 import machine
+import usocket
 
 
 class OTAUpdater:
@@ -35,7 +36,11 @@ class OTAUpdater:
         print('\tLatest version: ', latest_version)
         if latest_version > current_version:
             print('New version available, will download and install on next reboot')
-            os.mkdir(self.modulepath('next'))
+            try:
+                os.mkdir(self.modulepath('next'))
+            except OSError as e:
+                pass
+
             with open(self.modulepath('next/.version_on_reboot'), 'w') as versionfile:
                 versionfile.write(latest_version)
                 versionfile.close()
