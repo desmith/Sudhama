@@ -22,7 +22,7 @@ class Garuda:
         return (m, t, h, r,)
 
 
-    def send(self, data):
+    def send(self, m, t, h, r):
         print('Garuda in flight!')
-        ts(data)
+        ts(m, t, h, r)
         #ask(m, t, h)
