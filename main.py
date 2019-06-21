@@ -1,33 +1,47 @@
 import machine
-from src.ota_updater import OTAUpdater
-from include.secrets import _ssid, _pass
-from src.thingspeak import main as ts
-#from src.moisture import readSoilMoisture
-#from src.humidtemp import main as ht
+from time import sleep
 
-# led = Pin(2, Pin.OUT)
+from include.secrets import _ssid, _pass
+from src.ota_updater import OTAUpdater
+from src.garuda import Garuda
+
+
+DEVMODE = True
+
+GITHUB_REPO = 'https://github.com/desmith/sudhama'
+# Possible TODO: read this from a config file
+MEASUREMENT_INTERVAL = 60 * 10 # in seconds
+
+# 1000 = 1 sec
+# 10000 = 10 secs...
+deepsleep_min = 1000 * 60
+deepsleep_hr = deepsleep_min * 60
+deepsleep_time = deepsleep_min * 10
 
 
 def download_and_install_update_if_available():
     print('checking for updates...')
-    ota = OTAUpdater('https://github.com/desmith/sudhama')
+    ota = OTAUpdater(GITHUB_REPO)
     ota.download_and_install_update_if_available(_ssid, _pass)
 
-
 def start():
-    #wetness = readSoilMoisture()
-    #print("wetness: ", wetness)
-    #ht()
-    ts()
     print('Hare Krishna')
 
-    # put the device to sleep for 10 seconds
-    #print('going to sleep now...')
-    #machine.deepsleep(20000)
+    carrier = Garuda()
+    (moisture, temperature, humidity, rawdata) = carrier.measure()
+    carrier.send(moisture, temperature, humidity, rawdata)
 
+    if not DEVMODE:
+        print('going to sleep for a while...')
+        machine.deepsleep(deepsleep_time)
+
+        '''
+        Calling deepsleep() without an argument will put the device to sleep indefinitely
+        '''
 
 def boot():
     # check if the device woke from a deep sleep
+    # (A software reset does not change the reset cause)
     if machine.reset_cause() == machine.DEEPSLEEP_RESET:
         print('woke from a deep sleep')
 

@@ -3,14 +3,15 @@
 items=(
    boot.py
    main.py
+   board.py
    src
    include
+   lib
 )
 port=/dev/cu.SLAB_USBtoUART
 micropython_binary=./bin/esp32-20190618-v1.11-47-g1a51fc9dd.bin
 chipset=esp32
 
-echo "\$1: $1"
 
 if [ "$1" = "erase" ]; then
     echo "erasing device..."
@@ -32,10 +33,13 @@ elif [ "$1" = "src" ]; then
     echo "copying src directory to device..."
     ampy --port $port put src
 
-
 elif [ "$1" = "include" ]; then
     echo "copying include directory to device..."
     ampy --port $port put include
+
+elif [ "$1" = "lib" ]; then
+    echo "copying lib directory to device..."
+    ampy --port $port put lib
 
 else
     for i ($items)

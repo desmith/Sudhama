@@ -18,10 +18,4 @@ def main():
     d.humidity()     # eg. 41.3 (% RH)
 
 
-'''
-Calling deepsleep() without an argument will put the device to sleep indefinitely
-
-A software reset does not change the reset cause
-'''
-
 print("humidtemp imported")

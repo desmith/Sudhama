@@ -18,6 +18,7 @@ def readSoilMoisture():
 
     soilMoistureCalibrated = vPin.read() * (3.3 / 1024)
 
+    # wait for 20 seconds
     sleep(20)
 
     # Volumetric Water Content is a piecewise function of the voltage from the sensor
