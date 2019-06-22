@@ -19,10 +19,10 @@ class Garuda:
         h = 86.54
         r = 964
 
-        return (m, t, h, r,)
+        return (m, t, h, r)
 
 
-    def send(self, m, t, h, r):
+    def send(self, m, t, h, r, s):
         print('Garuda in flight!')
-        ts(m, t, h, r)
+        ts(m, t, h, r, s)
         #ask(m, t, h)

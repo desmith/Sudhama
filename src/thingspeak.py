@@ -19,13 +19,18 @@ THINGSPEAK_PORT = 443
 THINGSPEAK_DELAY = 15
 
 
-def main(moisture=None, temperature=None, humidity=None, rawdata=None):
+def main(moisture=None,
+         temperature=None,
+         humidity=None,
+         rawdata=None,
+         statusMsg=None
+         ):
 
     ts.send(active_channel, {
         field_moisture: moisture,
         field_temperature: temperature,
         field_humidity: humidity,
         field_moisture_raw: rawdata
-    })
+    }, statusMsg)
 
     sleep(THINGSPEAK_DELAY)
