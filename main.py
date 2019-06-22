@@ -39,10 +39,10 @@ def start():
     carrier = Garuda()
     (moisture, temperature, humidity, rawdata) = carrier.measure()
     (y, m, d, h, m, s, dow, doy) = utime.localtime()
-    date_time_stamp = ''.join(['GMT: ',
-                              str(y),'-', str(m), '-', str(d),
+    date_time_stamp = ''.join([str(y),'-', str(m), '-', str(d),
                               ' ',
-                              str(h), ':', str(m), ':', str(s)
+                              str(h), ':', str(m), ':', str(s),
+                              ' (GMT)  '
                               ])
     print("date_time_stamp: ", date_time_stamp)
 
