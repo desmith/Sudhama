@@ -21,7 +21,6 @@ MEASUREMENT_INTERVAL = 60 * 10  # in seconds
 
 rtc = RTC()
 ota = OTAUpdater(GITHUB_REPO)
-VERSION = ota.get_version(directory='src', version_file_name='.version')
 
 # 1000 = 1 sec
 # 10000 = 10 secs...
@@ -34,6 +33,11 @@ date_time_stamp = ''.join([str(y), '-', str(m), '-', str(d),
                           ' (GMT)  '
                           ])
 
+VERSION = ota.get_version(directory='src', version_file_name='.version')
+f = open('board.py')
+BOARD = f.readline().rstrip('\n')
+f.close()
+
 
 def download_and_install_update_if_available():
     print('checking for updates...')
@@ -42,17 +46,20 @@ def download_and_install_update_if_available():
 
 def start():
     print('Hare Krishna')
+    print('Board: ', BOARD)
+    print('Version: ', VERSION)
+
     carrier = Garuda()
     (moisture, temperature, humidity, sensor_data) = carrier.measure()
-    status_msg = ''.join([date_time_stamp,
-                         ' Current Version: ',
-                         VERSION,
-                         ' sensor_data = ', str(sensor_data.items())
+    status_msg = ' '.join([date_time_stamp,
+                         'Board: ', BOARD,
+                         'Version:', VERSION,
+                         'sensor_data:', str(sensor_data.items())
                          ])
     carrier.send(moisture, temperature, humidity, status_msg)
 
     print('going to sleep for a while...')
-    deepsleep(deepsleep_time)
+    # deepsleep(deepsleep_time)
 
     '''
     Calling deepsleep() without an argument will put the device to sleep indefinitely

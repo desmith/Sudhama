@@ -7,6 +7,7 @@ vPin = ADC(Pin(39))
 vPin.atten(ADC.ATTN_11DB)
 
 curve_data = {
+    0: 0,
     .6: 5,
     1.1: 10,
     1.3: 15,
