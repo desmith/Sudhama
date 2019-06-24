@@ -14,7 +14,6 @@ from src.garuda import Garuda
 # led = Pin(2, Pin.OUT)
 
 ntptime.settime()
-DEVMODE = False
 
 GITHUB_REPO = 'https://github.com/desmith/sudhama'
 # Possible TODO: read this from a config file
@@ -27,7 +26,6 @@ VERSION = ota.get_version(directory='src', version_file_name='.version')
 # 1000 = 1 sec
 # 10000 = 10 secs...
 deepsleep_min = 1000 * 60
-deepsleep_hr = deepsleep_min * 60
 deepsleep_time = deepsleep_min * 10
 (y, m, d, h, m, s, dow, doy) = utime.localtime()
 date_time_stamp = ''.join([str(y), '-', str(m), '-', str(d),
@@ -53,13 +51,12 @@ def start():
                          ])
     carrier.send(moisture, temperature, humidity, status_msg)
 
-    if not DEVMODE:
-        print('going to sleep for a while...')
-        deepsleep(deepsleep_time)
+    print('going to sleep for a while...')
+    deepsleep(deepsleep_time)
 
-        '''
-        Calling deepsleep() without an argument will put the device to sleep indefinitely
-        '''
+    '''
+    Calling deepsleep() without an argument will put the device to sleep indefinitely
+    '''
 
 
 def boot():
