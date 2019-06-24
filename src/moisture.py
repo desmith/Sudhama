@@ -16,7 +16,10 @@ curve_data = {
     1.7: 35,
     1.8: 40,
     2.0: 45,
-    2.2: 50
+    2.2: 50,
+    2.5: 50,
+    3.0: 50,
+    3.3: 50
 }
 
 # Volumetric Water Content is a piecewise function
@@ -39,7 +42,6 @@ def readSoilMoisture():
 
     sensor_value = vPin.read()
     sensor_voltage = sensor_value / 1000  # convert digital value to decimal
-    sensor_voltage = 1.8  # debugging
     soil_vwc = get_vwc(sensor_voltage)
     moisture_percentage = 100.00 * (sensor_voltage / 3.3)
 
