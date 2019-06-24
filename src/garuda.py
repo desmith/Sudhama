@@ -11,9 +11,11 @@ class Garuda:
     def measure(self):
         print('Garuda is fetching moisture data...')
 
-        while True:
-            (sensor_value, wetness) = readSoilMoisture()
-            print('wetness: ', wetness, '\n')
+        cnt = 0
+        while cnt < 6:
+            cnt += 1
+            (moisture_percentage, sensor_data) = readSoilMoisture()
+            print('moisture_percentage: ', moisture_percentage, '\n')
             sleep(2)
 
         print('Garuda is fetching temperature data...')
@@ -26,7 +28,7 @@ class Garuda:
 
         # ht()
 
-        return (wetness, temperature, humidity, sensor_value)
+        return (moisture_percentage, temperature, humidity, sensor_data)
 
     def send(self, m, t, h, s):
         print('Garuda in flight!')

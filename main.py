@@ -6,7 +6,7 @@ from machine import (DEEPSLEEP_RESET,
                      reset_cause
                      )
 
-from time import sleep
+# from time import sleep
 from include.secrets import _ssid, _pass
 from src.ota_updater import OTAUpdater
 from src.garuda import Garuda
@@ -14,11 +14,11 @@ from src.garuda import Garuda
 # led = Pin(2, Pin.OUT)
 
 ntptime.settime()
-DEVMODE = True
+DEVMODE = False
 
 GITHUB_REPO = 'https://github.com/desmith/sudhama'
 # Possible TODO: read this from a config file
-MEASUREMENT_INTERVAL = 60 * 10 # in seconds
+MEASUREMENT_INTERVAL = 60 * 10  # in seconds
 
 rtc = RTC()
 ota = OTAUpdater(GITHUB_REPO)
@@ -30,24 +30,26 @@ deepsleep_min = 1000 * 60
 deepsleep_hr = deepsleep_min * 60
 deepsleep_time = deepsleep_min * 10
 (y, m, d, h, m, s, dow, doy) = utime.localtime()
-date_time_stamp = ''.join([str(y),'-', str(m), '-', str(d),
+date_time_stamp = ''.join([str(y), '-', str(m), '-', str(d),
                           ' ',
                           str(h), ':', str(m), ':', str(s),
                           ' (GMT)  '
                           ])
 
+
 def download_and_install_update_if_available():
     print('checking for updates...')
     ota.download_and_install_update_if_available(_ssid, _pass)
 
+
 def start():
     print('Hare Krishna')
     carrier = Garuda()
-    (moisture, temperature, humidity, sensor_value) = carrier.measure()
+    (moisture, temperature, humidity, sensor_data) = carrier.measure()
     status_msg = ''.join([date_time_stamp,
                          ' Current Version: ',
                          VERSION,
-                         'sensor_value = ', str(sensor_value)
+                         'sensor_data = ', str(sensor_data)
                          ])
     carrier.send(moisture, temperature, humidity, status_msg)
 
@@ -58,6 +60,7 @@ def start():
         '''
         Calling deepsleep() without an argument will put the device to sleep indefinitely
         '''
+
 
 def boot():
     # check if the device woke from a deep sleep
