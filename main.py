@@ -11,6 +11,8 @@ from include.secrets import _ssid, _pass
 from src.ota_updater import OTAUpdater
 from src.garuda import Garuda
 
+# led = Pin(2, Pin.OUT)
+
 ntptime.settime()
 DEVMODE = True
 
@@ -27,7 +29,12 @@ VERSION = ota.get_version(directory='src', version_file_name='.version')
 deepsleep_min = 1000 * 60
 deepsleep_hr = deepsleep_min * 60
 deepsleep_time = deepsleep_min * 10
-
+(y, m, d, h, m, s, dow, doy) = utime.localtime()
+date_time_stamp = ''.join([str(y),'-', str(m), '-', str(d),
+                          ' ',
+                          str(h), ':', str(m), ':', str(s),
+                          ' (GMT)  '
+                          ])
 
 def download_and_install_update_if_available():
     print('checking for updates...')
@@ -35,23 +42,14 @@ def download_and_install_update_if_available():
 
 def start():
     print('Hare Krishna')
-
     carrier = Garuda()
-    (moisture, temperature, humidity, rawdata) = carrier.measure()
-    (y, m, d, h, m, s, dow, doy) = utime.localtime()
-    date_time_stamp = ''.join([str(y),'-', str(m), '-', str(d),
-                              ' ',
-                              str(h), ':', str(m), ':', str(s),
-                              ' (GMT)  '
-                              ])
-    print("date_time_stamp: ", date_time_stamp)
-
+    (moisture, temperature, humidity, sensor_value) = carrier.measure()
     status_msg = ''.join([date_time_stamp,
                          ' Current Version: ',
                          VERSION,
-
+                         'sensor_value = ', str(sensor_value)
                          ])
-    carrier.send(moisture, temperature, humidity, rawdata, status_msg)
+    carrier.send(moisture, temperature, humidity, status_msg)
 
     if not DEVMODE:
         print('going to sleep for a while...')

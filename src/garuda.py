@@ -1,9 +1,7 @@
+from time import sleep
 from src.thingspeak import main as ts
-#from src.asksensors import main as ask
-#from src.moisture import readSoilMoisture
+from src.moisture import readSoilMoisture
 #from src.humidtemp import main as ht
-
-# led = Pin(2, Pin.OUT)
 
 
 class Garuda:
@@ -11,18 +9,25 @@ class Garuda:
         super(Garuda, self).__init__(*args, **kwargs)
 
     def measure(self):
-        #wetness = readSoilMoisture()
-        #print("wetness: ", wetness)
-        #ht()
-        m = 88
-        t = 108.96
-        h = 86.54
-        r = 964
+        print('Garuda is fetching moisture data...')
 
-        return (m, t, h, r)
+        while True:
+            (sensor_value, wetness) = readSoilMoisture()
+            print('wetness: ', wetness, '\n')
+            sleep(2)
 
+        print('Garuda is fetching temperature data...')
+        temperature = ''.join([str(108.96), ' [dummy data]'])
+        print('temperature: ', temperature, '\n')
 
-    def send(self, m, t, h, r, s):
+        print('Garuda is fetching humidity data...')
+        humidity = ''.join([str(86.54), ' [dummy_data]'])
+        print('humidity: ', humidity, '\n')
+
+        # ht()
+
+        return (wetness, temperature, humidity, sensor_value)
+
+    def send(self, m, t, h, s):
         print('Garuda in flight!')
-        ts(m, t, h, r, s)
-        #ask(m, t, h)
+        ts(m, t, h, s)

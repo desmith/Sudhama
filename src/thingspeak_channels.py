@@ -10,7 +10,7 @@ active_channel = channel_esp32_D
 field_moisture = 'Moisture'
 field_temperature = 'Temperature'
 field_humidity = 'Humidity'
-field_moisture_raw = 'Raw Data [Moisture]'
+
 
 channels = [
     Channel(channel_esp8266, THINGSPEAK_WRITE_KEYS[channel_esp8266],
@@ -23,16 +23,14 @@ channels = [
             [
             field_moisture,
             field_temperature,
-            field_humidity,
-            field_moisture_raw
+            field_humidity
             ]
             ),
     Channel(channel_esp32_P, THINGSPEAK_WRITE_KEYS[channel_esp32_P],
             [
             field_moisture,
             field_temperature,
-            field_humidity,
-            field_moisture_raw
+            field_humidity
             ]
             )
 

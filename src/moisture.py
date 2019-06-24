@@ -1,48 +1,54 @@
-from machine import Pin
+from machine import ADC, Pin
 from time import sleep
 
-vPin = Pin(26, Pin.IN)
-soilMoistureRaw           = 0  # moisture variable
-soilMoistureCalibrated    = 0  # moisture variable
-soilMoisture              = 0  # moisture variable
-moisture_as_percentage    = 0  # calibrated moisture variable
-moisture_as_string        = ""
+
+led = Pin(2, Pin.OUT)
+vPin = ADC(Pin(39))
+# 11dB attenuation, gives a maximum input voltage of approximately 3.6v
+vPin.atten(ADC.ATTN_11DB)
+
+sensor_range              = 1024
+sensor_max_voltage        = 3.3
+
+curve_data = {
+    .6: 5,
+    1.1: 10,
+    1.3: 15,
+    1.4: 20,
+    1.5: 25,
+    1.6: 30,
+    1.7: 35,
+    1.8: 40,
+    2.0: 45,
+    2.2: 50
+}
+
+
+def get_vwc(k):
+    k = float(k)
+    return curve_data[max(key for key in map(float, curve_data.keys()) if key <= k)]
 
 
 def readSoilMoisture():
-    #Serial port returns measurement data
-    soilMoistureRaw = vPin.read()
 
-    # Convert to calibrated display value
-    # dryness_as_percentage = 100.00 * (1.00 - ((sensorMoisture - Min Value of Sensor) / (Max value - Min Value of Sensor)));
+    led.value(1)
+    print('reading moisture...\n')
+    # Serial port returns measurement data
 
-    soilMoistureCalibrated = vPin.read() * (3.3 / 1024)
+    sensor_value = vPin.read()
+    sensor_voltage = sensor_value / 1000
 
-    # wait for 20 seconds
-    sleep(20)
+    # Volumetric Water Content is a piecewise function
+    # of the voltage from the sensor
 
-    # Volumetric Water Content is a piecewise function of the voltage from the sensor
+    soil_vwc = get_vwc(sensor_voltage)
+    moisture_percentage = 100.00 * (sensor_voltage / 3.3)
 
-    if soilMoistureCalibrated < 1.1:
-        soilMoisture = (10 * soilMoistureCalibrated) - 1
+    print('sensor_value: ', sensor_value)
+    print('sensor_voltage: ', sensor_voltage)
+    print('soil_vwc: ', soil_vwc)
+    print('moisture_percentage: ', moisture_percentage)
 
-    elif soilMoistureCalibrated < 1.3:
-        soilMoisture = (25 * soilMoistureCalibrated) - 17.5
-
-    elif (soilMoistureCalibrated < 1.82):
-        soilMoisture = (48.08 * soilMoistureCalibrated) - 47.5
-
-    elif (soilMoistureCalibrated < 2.2):
-        soilMoisture = (26.32 * soilMoistureCalibrated) - 7.89
-
-    else:
-        soilMoisture = (62.5 * soilMoistureCalibrated) - 87.5
-
-    # Serial.println(Moisture)
-    moisture_as_string = soilMoisture
-
-    print("Moisture=", soilMoisture)
-    print("MoistureRaw=", soilMoistureRaw)
-    print("moisture_as_string", moisture_as_string)
-
-    return soilMoisture
+    sleep(2)
+    led.value(0)
+    return (sensor_value, moisture_percentage)
