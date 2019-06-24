@@ -15,7 +15,6 @@ class Garuda:
         while cnt < 6:
             cnt += 1
             (moisture_percentage, sensor_data) = readSoilMoisture()
-            print('moisture_percentage: ', moisture_percentage, '\n')
             sleep(2)
 
         print('Garuda is fetching temperature data...')

@@ -47,7 +47,7 @@ def start():
     status_msg = ''.join([date_time_stamp,
                          ' Current Version: ',
                          VERSION,
-                         'sensor_data = ', str(sensor_data)
+                         ' sensor_data = ', str(sensor_data.items())
                          ])
     carrier.send(moisture, temperature, humidity, status_msg)
 

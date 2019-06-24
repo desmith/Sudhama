@@ -112,7 +112,6 @@ class OTAUpdater:
             f = open(directory + '/' + version_file_name)
             version = f.read()
             f.close()
-            print('get_version(', directory, ')->version_file_name: ', version)
             return version
         return '0.0'
 

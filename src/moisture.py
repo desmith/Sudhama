@@ -27,7 +27,6 @@ curve_data = {
 
 def get_vwc(sensor_voltage):
     sensor_voltage = float(sensor_voltage)
-    print('get_vwc()->sensor_voltage: ', sensor_voltage)
     if not sensor_voltage:
         return 0
     return curve_data[max(key for key in map(float, curve_data.keys()) if key <= sensor_voltage)]
@@ -40,7 +39,7 @@ def readSoilMoisture():
 
     sensor_value = vPin.read()
     sensor_voltage = sensor_value / 1000  # convert digital value to decimal
-
+    sensor_voltage = 1.8  # debugging
     soil_vwc = get_vwc(sensor_voltage)
     moisture_percentage = 100.00 * (sensor_voltage / 3.3)
 
