@@ -10,12 +10,13 @@ from machine import (DEEPSLEEP_RESET,
 from include.secrets import _ssid, _pass
 from src.ota_updater import OTAUpdater
 from src.garuda import Garuda
+from src import water
 
 # led = Pin(2, Pin.OUT)
 
 ntptime.settime()
 
-GITHUB_REPO = 'https://github.com/desmith/sudhama'
+GITHUB_REPO = 'https://github.com/desmith/Sudhama_esp32_mpy'
 # Possible TODO: read this from a config file
 MEASUREMENT_INTERVAL = 60 * 10  # in seconds
 
@@ -56,10 +57,19 @@ def start():
                          'Version:', VERSION,
                          'sensor_data:', str(sensor_data.items())
                          ])
+
+    print('moisture average: ', moisture, '\n')
+
+    if moisture <= 40:
+        water.open()
+    else:
+        water.close()
+
+    status_msg = ''.join([status_msg, ' water: ', water.status()])
     carrier.send(moisture, temperature, humidity, status_msg)
 
     print('going to sleep for a while...')
-    # deepsleep(deepsleep_time)
+    deepsleep(deepsleep_time)
 
     '''
     Calling deepsleep() without an argument will put the device to sleep indefinitely

@@ -13,10 +13,15 @@ class Garuda:
         print('Garuda is fetching moisture data...')
 
         cnt = 0
+        values = []
         while cnt < 6:
             cnt += 1
             (moisture_percentage, sensor_data) = readSoilMoisture()
+            values.append(moisture_percentage)
             sleep(2)
+
+        average = sum(values) / float(len(values))
+        moisture_percentage = round(average, 2)
 
         print('Garuda is fetching temperature data...')
         temperature = ''.join([str(108.96), ' [dummy data]'])
@@ -27,11 +32,6 @@ class Garuda:
         print('humidity: ', humidity, '\n')
 
         # ht()
-
-        if moisture_percentage <= 40:
-            water.open()
-        else:
-            water.close()
 
         return (moisture_percentage, temperature, humidity, sensor_data)
 

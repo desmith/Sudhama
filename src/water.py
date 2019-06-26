@@ -5,8 +5,15 @@ valve = Signal(valve_pin, invert=False)
 
 
 def open():
-    valve.on()
+    valve.off()
 
 
 def close():
-    valve.off()
+    valve.on()
+
+
+def status():
+    return 'stopped' if valve.value() else 'flowing'
+
+
+# close()
