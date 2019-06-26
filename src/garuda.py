@@ -1,6 +1,7 @@
 from time import sleep
 from src.thingspeak import main as ts
 from src.moisture import readSoilMoisture
+from src import water
 #from src.humidtemp import main as ht
 
 
@@ -26,6 +27,11 @@ class Garuda:
         print('humidity: ', humidity, '\n')
 
         # ht()
+
+        if moisture_percentage <= 40:
+            water.open()
+        else:
+            water.close()
 
         return (moisture_percentage, temperature, humidity, sensor_data)
 
