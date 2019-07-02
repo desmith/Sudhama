@@ -16,4 +16,4 @@ def status():
     return 'stopped' if valve.value() else 'flowing'
 
 
-# close()
+close()

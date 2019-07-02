@@ -1,7 +1,7 @@
 from machine import ADC, Pin
 
 led = Pin(2, Pin.OUT)
-vPin = ADC(Pin(39))
+vPin = ADC(Pin(34))
 # 11DB attenuation allows for a maximum input voltage
 #  of approximately 3.6v (default is 0-1.0v)
 vPin.atten(ADC.ATTN_11DB)
@@ -36,9 +36,6 @@ def get_vwc(sensor_voltage):
 
 def readSoilMoisture():
     led.value(1)
-    print('reading moisture...\n')
-    # Serial port returns measurement data
-
     sensor_value = vPin.read()
     sensor_voltage = sensor_value / 1000  # convert digital value to decimal
     soil_vwc = get_vwc(sensor_voltage)

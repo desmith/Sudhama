@@ -1,11 +1,11 @@
 from lib.thingspeak import Channel
-from include.secrets import THINGSPEAK_WRITE_KEYS, THINGSPEAK_CHANNEL_IDS
+from include.secrets import THINGSPEAK_WRITE_KEYS
 
 
-channel_esp8266 = 'Sudhama'
+channel_esp32 = 'Sudhama'
 channel_esp32_D = 'Sridama'
 channel_esp32_P = 'Gauranga'
-active_channel = channel_esp32_D
+active_channel = channel_esp32
 
 field_moisture = 'Moisture'
 field_temperature = 'Temperature'
@@ -13,8 +13,9 @@ field_humidity = 'Humidity'
 
 
 channels = [
-    Channel(channel_esp8266, THINGSPEAK_WRITE_KEYS[channel_esp8266],
+    Channel(channel_esp32, THINGSPEAK_WRITE_KEYS[channel_esp32],
             [
+            field_moisture,
             field_temperature,
             field_humidity
             ]

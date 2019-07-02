@@ -1,17 +1,19 @@
 try:
     import usocket as socket
     import ussl as ssl
-    from ucollections import namedtuple
-    from utime import time, ticks_ms, ticks_diff
+    # from ucollections import namedtuple
+    # from utime import time, ticks_ms, ticks_diff
+    from utime import time
 except ImportError:
     import socket
     import ssl
     from typing import Dict, Union, List, Type
-    from collections import namedtuple
     from time import time
+
 
 def ticks_ms():
     return time() * 1000
+
 
 def ticks_diff(end_time, start_time):
     return end_time - start_time
