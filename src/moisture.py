@@ -1,10 +1,5 @@
-from machine import ADC, Pin
+from src.pins import led, vPin
 
-led = Pin(2, Pin.OUT)
-vPin = ADC(Pin(34))
-# 11DB attenuation allows for a maximum input voltage
-#  of approximately 3.6v (default is 0-1.0v)
-vPin.atten(ADC.ATTN_11DB)
 
 curve_data = {
     0: 0,

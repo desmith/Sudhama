@@ -1,7 +1,8 @@
 import network
 import utime
 import ntptime
-import time
+from machine import deepsleep
+from time import sleep
 
 from src.thingspeak import main as ts
 from src.moisture import readSoilMoisture
@@ -10,6 +11,20 @@ from src.humidtemp import main as ht
 
 
 ntptime.settime()
+
+
+### TODO: read these from a config file
+# 1000 = 1 sec
+# 10000 = 10 secs...
+DEEPSLEEP_MIN = 1000 * 60
+DEEPSLEEP_TIME = DEEPSLEEP_MIN * 30
+
+SLEEPTIME = 60 * 60  # in seconds
+
+# deepsleep(DEEPSLEEP_TIME)
+'''
+Calling deepsleep() without an argument will put the device to sleep indefinitely
+'''
 
 
 class Garuda:
@@ -21,10 +36,10 @@ class Garuda:
         print('Board: ', self.BOARD)
         print('Version: ', self.VERSION)
 
-        (y, m, d, h, m, s, dow, doy) = utime.localtime()
-        self.timestamp = ''.join([str(y), '-', str(m), '-', str(d),
+        (y, mo, d, h, min, s, dow, doy) = utime.localtime()
+        self.timestamp = ''.join([str(y), '-', str(mo), '-', str(d),
                                   ' ',
-                                  str(h), ':', str(m), ':', str(s),
+                                  str(h), ':', str(min), ':', str(s),
                                   ' (GMT)'
                                   ])
 
@@ -40,7 +55,7 @@ class Garuda:
             cnt += 1
             (moisture_percentage, sensor_data) = readSoilMoisture()
             values.append(moisture_percentage)
-            time.sleep(2)
+            sleep(2)
 
         average = sum(values) / float(len(values))
         moisture = round(average, 2)
@@ -82,3 +97,8 @@ class Garuda:
         print('Garuda Rising!')
         self.measure()
         self.send()
+        sleep(SLEEPTIME)
+        deepsleep(DEEPSLEEP_TIME)
+        '''
+        Calling deepsleep() without an argument will put the device to sleep indefinitely
+        '''
