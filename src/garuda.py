@@ -17,9 +17,9 @@ ntptime.settime()
 # 1000 = 1 sec
 # 10000 = 10 secs...
 DEEPSLEEP_MIN = 1000 * 60
-DEEPSLEEP_TIME = DEEPSLEEP_MIN * 30
+DEEPSLEEP_TIME = DEEPSLEEP_MIN * 10
 
-SLEEPTIME = 60 * 60  # in seconds
+SLEEPTIME_SEC = 60 * 20  # in seconds
 
 # deepsleep(DEEPSLEEP_TIME)
 '''
@@ -97,7 +97,7 @@ class Garuda:
         print('Garuda Rising!')
         self.measure()
         self.send()
-        sleep(SLEEPTIME)
+        sleep(SLEEPTIME_SEC)
         deepsleep(DEEPSLEEP_TIME)
         '''
         Calling deepsleep() without an argument will put the device to sleep indefinitely
