@@ -85,7 +85,7 @@ class Garuda:
         temperature, humidity = ht()
         # temperature, humidity = 108.6, 45.56  $ for debugging
 
-        self.moisture = moisture
+        self.moisture = moisture_percentage
         self.temperature = temperature
         self.humidity = humidity
         self.sensor_data = {
