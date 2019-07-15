@@ -69,6 +69,7 @@ class Garuda:
 
         average_vwc = sum(vwcs) / float(len(vwcs))
         soil_vwc = round(average_vwc, 2)
+
         moisture_percentage = soil_vwc * 2
 
         print('\nmoisture: ', moisture)
@@ -89,7 +90,7 @@ class Garuda:
         self.temperature = temperature
         self.humidity = humidity
         self.sensor_data = {
-            'moisture': moisture,
+            'vegetronix': moisture,
             'moisture_percentage': moisture_percentage,
             'voltage': voltage,
             'vwc': soil_vwc
