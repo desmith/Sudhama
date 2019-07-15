@@ -12,6 +12,9 @@ from src.humidtemp import main as ht
 
 ntptime.settime()
 
+txt = "name = 'esp32-sudhama'"
+with open('../board.py', 'w') as file:
+    file.write(txt)
 
 ### TODO: read these from a config file
 # 1000 = 1 sec
