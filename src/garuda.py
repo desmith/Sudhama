@@ -89,8 +89,8 @@ class Garuda:
         self.temperature = temperature
         self.humidity = humidity
         self.sensor_data = {
-            'vegetronix': moisture,
-            'moisture_percentage': moisture_percentage,
+            'value': moisture,
+            'percentage': moisture_percentage,
             'voltage': voltage,
             'vwc': soil_vwc
         }
