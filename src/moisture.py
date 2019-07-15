@@ -40,6 +40,7 @@ def readSoilMoisture():
     sensor_data = {
         'value': sensor_value,
         'voltage': sensor_voltage,
+        'moisture_percentage': moisture_percentage,
         'vwc': soil_vwc
     }
 

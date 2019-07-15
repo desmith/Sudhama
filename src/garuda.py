@@ -62,7 +62,7 @@ class Garuda:
 
         print('\nmoisture average: ', moisture, '\n')
 
-        if moisture <= 40:
+        if moisture < 40:
             print('opening valve...')
             water.open()
         else:
