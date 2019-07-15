@@ -1,1 +1,1 @@
-name="esp32-sudhama"
+name = 'esp32-sudhama'
