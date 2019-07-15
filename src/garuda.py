@@ -62,15 +62,17 @@ class Garuda:
             sleep(2)
 
         average_value = sum(values) / float(len(values))
-        moisture_percentage = round(average_value, 2)
+        moisture = round(average_value, 2)
 
         average_voltage = sum(voltages) / float(len(voltages))
         voltage = round(average_voltage, 2)
 
         average_vwc = sum(vwcs) / float(len(vwcs))
         soil_vwc = round(average_vwc, 2)
+        moisture_percentage = soil_vwc * 2
 
-        print('\nmoisture_percentage: ', moisture_percentage, '\n')
+        print('\nmoisture: ', moisture)
+        print('moisture_percentage: ', moisture_percentage, '\n')
 
         if moisture_percentage < 40:
             print('opening valve...')
@@ -80,12 +82,14 @@ class Garuda:
             water.close()
 
         print('Garuda is fetching temperature and humidity data...')
-        (temperature, humidity) = ht()
+        temperature, humidity = ht()
+        # temperature, humidity = 108.6, 45.56  $ for debugging
 
-        self.moisture_percentage = moisture_percentage
+        self.moisture = moisture
         self.temperature = temperature
         self.humidity = humidity
         self.sensor_data = {
+            'moisture': moisture,
             'moisture_percentage': moisture_percentage,
             'voltage': voltage,
             'vwc': soil_vwc
