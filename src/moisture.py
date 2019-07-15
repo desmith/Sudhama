@@ -35,19 +35,10 @@ def readSoilMoisture():
     sensor_voltage = sensor_value / 1000  # convert digital value to decimal
     soil_vwc = get_vwc(sensor_voltage)
     #moisture_percentage = 100.00 * (sensor_voltage / 3.3)
-    moisture_percentage = soil_vwc * 2
-
-    sensor_data = {
-        'value': sensor_value,
-        'voltage': sensor_voltage,
-        'moisture_percentage': moisture_percentage,
-        'vwc': soil_vwc
-    }
 
     print('sensor_value: ', sensor_value)
     print('sensor_voltage: ', sensor_voltage)
     print('soil_vwc: ', soil_vwc)
-    print('moisture_percentage: ', moisture_percentage)
 
     led.value(0)
-    return (moisture_percentage, sensor_data)
+    return sensor_value, sensor_voltage, soil_vwc

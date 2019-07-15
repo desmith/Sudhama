@@ -51,18 +51,28 @@ class Garuda:
 
         cnt = 0
         values = []
+        voltages = []
+        vwcs = []
         while cnt < 6:
             cnt += 1
-            (moisture_percentage, sensor_data) = readSoilMoisture()
-            values.append(moisture_percentage)
+            sensor_value, sensor_voltage, soil_vwc = readSoilMoisture()
+            values.append(sensor_value)
+            voltages.append(sensor_voltage)
+            vwcs.append(soil_vwc)
             sleep(2)
 
-        average = sum(values) / float(len(values))
-        moisture = round(average, 2)
+        average_value = sum(values) / float(len(values))
+        moisture_percentage = round(average_value, 2)
 
-        print('\nmoisture average: ', moisture, '\n')
+        average_voltage = sum(voltages) / float(len(voltages))
+        voltage = round(average_voltage, 2)
 
-        if moisture < 40:
+        average_vwc = sum(vwcs) / float(len(vwcs))
+        soil_vwc = round(average_vwc, 2)
+
+        print('\nmoisture_percentage: ', moisture_percentage, '\n')
+
+        if moisture_percentage < 40:
             print('opening valve...')
             water.open()
         else:
@@ -72,10 +82,14 @@ class Garuda:
         print('Garuda is fetching temperature and humidity data...')
         (temperature, humidity) = ht()
 
-        self.moisture = moisture
+        self.moisture_percentage = moisture_percentage
         self.temperature = temperature
         self.humidity = humidity
-        self.sensor_data = sensor_data
+        self.sensor_data = {
+            'moisture_percentage': moisture_percentage,
+            'voltage': voltage,
+            'vwc': soil_vwc
+        }
 
     def send(self):
         print('Garuda in flight!')
