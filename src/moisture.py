@@ -1,6 +1,7 @@
 from src.pins import led, vPin
 
 
+# RE: https://www.vegetronix.com/Curves/VH400-RevA/VG400-RevA-Curves.phtml
 curve_data = {
     0: 0,
     .6: 5,

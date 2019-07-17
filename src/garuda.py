@@ -18,7 +18,8 @@ ntptime.settime()
 DEEPSLEEP_MIN = 1000 * 60
 DEEPSLEEP_TIME = DEEPSLEEP_MIN * 10
 
-SLEEPTIME_SEC = 60 * 20  # in seconds
+SLEEPTIME_FLOWING = 60 * 80  # in seconds
+SLEEPTIME_STOPPED = 60 * 20  # in seconds
 
 # deepsleep(DEEPSLEEP_TIME)
 '''
@@ -36,6 +37,8 @@ class Garuda:
         print('Version: ', self.VERSION)
 
         (y, mo, d, h, min, s, dow, doy) = utime.localtime()
+        et = utime.mktime(y, mo, d, h + 4, min, s, dow, doy)
+        (y, mo, d, h, min, s, dow, doy) = utime.localtime(et)
         self.timestamp = ''.join([str(y), '-', str(mo), '-', str(d),
                                   ' ',
                                   str(h), ':', str(min), ':', str(s),
@@ -74,13 +77,6 @@ class Garuda:
         print('\nmoisture: ', moisture)
         print('moisture_percentage: ', moisture_percentage, '\n')
 
-        if moisture_percentage < 40:
-            print('opening valve...')
-            water.open()
-        else:
-            print('closing valve...')
-            water.close()
-
         print('Garuda is fetching temperature and humidity data...')
         temperature, humidity = ht()
         # temperature, humidity = 108.6, 45.56  $ for debugging
@@ -108,14 +104,21 @@ class Garuda:
         #self.status_msg += 'sensor_data: ' + str(sensor_data)
 
         print('sending data to Thingspeak: ', status_msg)
-
         ts(self.moisture, self.temperature, self.humidity, status_msg)
 
     def arise(self):
         print('Garuda Rising!')
         self.measure()
+
+        if self.moisture_percentage < 40:
+            water.open()
+            sleep(SLEEPTIME_FLOWING)
+        else:
+            water.close()
+            sleep(SLEEPTIME_STOPPED)
+
         self.send()
-        sleep(SLEEPTIME_SEC)
+
         deepsleep(DEEPSLEEP_TIME)
         '''
         Calling deepsleep() without an argument will put the device to sleep indefinitely
