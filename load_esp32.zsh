@@ -9,7 +9,7 @@ items=(
    lib
 )
 port=/dev/cu.SLAB_USBtoUART
-mpy_binary=./bin/esp32-20190702-v1.11-86.bin
+mpy_binary=./bin/esp32-20190717-v1.11-163.bin
 chipset=esp32
 
 

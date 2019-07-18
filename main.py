@@ -30,8 +30,6 @@ def start():
     carrier = Garuda(board=BOARD, version=VERSION)
     carrier.arise()
 
-    print('going to sleep for a while (but not deep sleep)...')
-
 
 def boot():
     # check if the device woke from a deep sleep

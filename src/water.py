@@ -1,4 +1,8 @@
-from src.pins import valve
+from machine import Pin, Signal
+
+
+valve_pin = Pin(22, Pin.OUT)
+valve = Signal(valve_pin, invert=False)
 
 
 def open():

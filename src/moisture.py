@@ -1,7 +1,13 @@
-from src.pins import led, vPin
+from machine import ADC, Pin
 
 
-# RE: https://www.vegetronix.com/Curves/VH400-RevA/VG400-RevA-Curves.phtml
+led = Pin(2, Pin.OUT)
+vPin = ADC(Pin(34))
+vPin.atten(ADC.ATTN_11DB)
+# 11DB attenuation allows for a maximum input voltage
+#  of approximately 3.6v (default is 0-1.0v)
+
+#  RE: https://www.vegetronix.com/Curves/VH400-RevA/VG400-RevA-Curves.phtml
 curve_data = {
     0: 0,
     .6: 5,

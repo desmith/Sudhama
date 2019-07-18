@@ -1,5 +1,9 @@
 """The DHT driver is implemented in software and works on all pins:"""
-from src.pins import dht22
+import dht
+from machine import Pin
+
+
+dht22 = dht.DHT22(Pin(21))
 
 
 def main():
@@ -14,7 +18,7 @@ def main():
     print('Temperature: %3.1f F' % temp_f)
     print('Humidity: %3.1f %%' % humidity)
 
-    return (temp_f, humidity)
+    return temp_f, humidity
 
 
 print('humidtemp imported')

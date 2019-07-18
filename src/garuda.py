@@ -21,6 +21,8 @@ DEEPSLEEP_TIME = DEEPSLEEP_MIN * 10
 SLEEPTIME_FLOWING = 60 * 80  # in seconds
 SLEEPTIME_STOPPED = 60 * 20  # in seconds
 
+WATCHDOG_TIMEOUT = 1000 * 60  # 60 seconds
+
 # deepsleep(DEEPSLEEP_TIME)
 '''
 Calling deepsleep() without an argument will put the device to sleep indefinitely
@@ -36,9 +38,9 @@ class Garuda:
         print('Board: ', self.BOARD)
         print('Version: ', self.VERSION)
 
-        (y, mo, d, h, min, s, dow, doy) = utime.localtime()
-        et = utime.mktime(y, mo, d, h + 4, min, s, dow, doy)
-        (y, mo, d, h, min, s, dow, doy) = utime.localtime(et)
+        y, mo, d, h, min, s, dow, doy = utime.localtime()
+        et = utime.mktime((y, mo, d, h + 4, min, s, dow, doy))
+        y, mo, d, h, min, s, dow, doy = utime.localtime(et)
         self.timestamp = ''.join([str(y), '-', str(mo), '-', str(d),
                                   ' ',
                                   str(h), ':', str(min), ':', str(s),
@@ -77,19 +79,19 @@ class Garuda:
         print('\nmoisture: ', moisture)
         print('moisture_percentage: ', moisture_percentage, '\n')
 
-        print('Garuda is fetching temperature and humidity data...')
-        temperature, humidity = ht()
-        # temperature, humidity = 108.6, 45.56  $ for debugging
-
         self.moisture = moisture_percentage
-        self.temperature = temperature
-        self.humidity = humidity
         self.sensor_data = {
             'value': moisture,
             'percentage': moisture_percentage,
             'voltage': voltage,
             'vwc': soil_vwc
         }
+
+        print('Garuda is fetching temperature and humidity data...')
+        self.temperature, self.humidity = ht()
+        # temperature, humidity = 108.6, 45.56  # for debugging
+
+        return
 
     def send(self):
         print('Garuda in flight!')
@@ -101,24 +103,30 @@ class Garuda:
                               'ipaddress: ' + self.ipaddress
                               ])
 
-        #self.status_msg += 'sensor_data: ' + str(sensor_data)
-
         print('sending data to Thingspeak: ', status_msg)
         ts(self.moisture, self.temperature, self.humidity, status_msg)
+
+        return
 
     def arise(self):
         print('Garuda Rising!')
         self.measure()
 
         if self.moisture < 40:
+            print('opening valve...')
             water.open()
-            sleep(SLEEPTIME_FLOWING)
+            SLEEPTIME = SLEEPTIME_FLOWING
         else:
+            print('closing valve...')
             water.close()
-            sleep(SLEEPTIME_STOPPED)
+            SLEEPTIME = SLEEPTIME_STOPPED
 
         self.send()
 
+        print('going to sleep...')
+        sleep(SLEEPTIME)
+
+        print('going to DEEP sleep')
         deepsleep(DEEPSLEEP_TIME)
         '''
         Calling deepsleep() without an argument will put the device to sleep indefinitely
