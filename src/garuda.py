@@ -110,7 +110,7 @@ class Garuda:
         print('Garuda Rising!')
         self.measure()
 
-        if self.moisture_percentage < 40:
+        if self.moisture < 40:
             water.open()
             sleep(SLEEPTIME_FLOWING)
         else:
