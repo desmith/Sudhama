@@ -1,6 +1,6 @@
 from time import sleep
 
-from lib.thingspeak import ThingSpeakAPI, ProtoHTTPS
+from src.lib.thingspeak import ThingSpeakAPI, ProtoHTTPS
 from src.thingspeak_channels import (channels,
                                      active_channel,
                                      field_moisture,

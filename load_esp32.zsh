@@ -5,8 +5,6 @@ items=(
    main.py
    board.py
    src
-   include
-   lib
 )
 port=/dev/cu.SLAB_USBtoUART
 mpy_binary=./bin/esp32-20190717-v1.11-163.bin
@@ -36,14 +34,6 @@ elif [ "$1" = "main" ]; then
 elif [ "$1" = "src" ]; then
     echo "copying src directory to device..."
     ampy --port $port put src
-
-elif [ "$1" = "include" ]; then
-    echo "copying include directory to device..."
-    ampy --port $port put include
-
-elif [ "$1" = "lib" ]; then
-    echo "copying lib directory to device..."
-    ampy --port $port put lib
 
 else
     for i ($items)

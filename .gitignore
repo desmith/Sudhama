@@ -1,11 +1,12 @@
 # Byte-compiled / optimized / DLL files
 
-include/secrets.*
+secrets.*
 
 __pycache__/
 *.py[cod]
 *$py.class
 
+.DS_Store
 
 # Environments
 .env

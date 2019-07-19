@@ -1,5 +1,5 @@
-from lib.thingspeak import Channel
-from include.secrets import THINGSPEAK_WRITE_KEYS
+from src.lib.thingspeak import Channel
+from src.include.secrets import THINGSPEAK_WRITE_KEYS
 
 
 channel_esp32 = 'Sudhama'

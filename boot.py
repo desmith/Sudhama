@@ -1,7 +1,7 @@
 # boot.py
 
 import network
-from include.secrets import _ssid, _pass
+from src.include.secrets import _ssid, _pass
 
 
 #wlan = network.WLAN() # get current object, without changing the mode

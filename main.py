@@ -2,7 +2,7 @@
 
 from machine import DEEPSLEEP_RESET, reset_cause
 
-from include.secrets import _ssid, _pass
+from src.include.secrets import _ssid, _pass
 from src.ota_updater import OTAUpdater
 from src.garuda import Garuda
 
