@@ -59,7 +59,7 @@ class Garuda:
         self.timestamp = ''.join([str(y), '-', str(mo), '-', str(d),
                                   ' ',
                                   str(h), ':', str(min), ':', str(s),
-                                  ' (GMT)'
+                                  ' (GMT -4)'
                                   ])
 
         print('timestamp: ', self.timestamp)
