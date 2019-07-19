@@ -13,7 +13,7 @@ from src.moisture import readSoilMoisture
 from src import water
 from src.humidtemp import main as ht
 
-from src.include.secrets import (AIO_CLIENT_ID,
+from include.secrets import (AIO_CLIENT_ID,
                                  AIO_SERVER,
                                  AIO_PORT,
                                  AIO_USER,
