@@ -41,6 +41,11 @@ AIO_FEEDS_KEYS = list(AIO_FEEDS.keys())
 Calling deepsleep() without an argument will put the device to sleep indefinitely
 '''
 
+txt = 'name = \'esp32-sudhama\''
+f = open('/board.py', 'w')
+f.write(txt)
+f.close()
+
 
 class Garuda:
     def __init__(self, board, version):
